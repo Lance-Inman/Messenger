@@ -30,13 +30,13 @@ public class Channel {
         return channelName;
     }
     public void removeUser(User user, String message)throws IOException{
-        int x = 0;
-        while(x<list.size()){
+        for(int x = 0; x < list.size(); x++) {
             if(list.get(x) == user){
+                PrintWriter out = new PrintWriter(list.get(x).s.getOutputStream(), true);
+                out.println(message);
                 list.remove(x);
                 return;
             }
-            x++;
         }
     }
 
