@@ -12,6 +12,10 @@ public class Channel {
     private String password;
     private boolean hasPassword;
     LinkedList<User> list = new LinkedList<User>();
+    /**
+     * Create a Channel with the given name
+     * @param name  the name of the new Channel
+     */
     public Channel(String name){
         channelName = name;
         hasPassword = false;
@@ -20,27 +24,53 @@ public class Channel {
         channelName = name;
         hasPassword = true;
     }
+    /**
+     * Adds User u to the list of Users
+     * @param u the User to add
+     */
     public void addUser(User u){
         list.addLast(u);
     }
+
+    /**
+     * Returns the LinkedList of Users
+     * @return  the LinkedList of Users
+     */
     public LinkedList<User> getList(){
         return list;
     }
+
+    /**
+     * Returns the name of the channel
+     * @return  the channel name as a String
+     */
     public String getName(){
         return channelName;
     }
+
+    /**
+     * Remove user from list of Users and send message
+     * @param user  the user to remove
+     * @param message   the message to send to user
+     * @throws IOException  if the user's PrintStream can not be found
+     */
     public void removeUser(User user, String message)throws IOException{
-        for(int x = 0; x < list.size(); x++) {
+        int x = 0;
+        while(x<list.size()){
             if(list.get(x) == user){
-                PrintWriter out = new PrintWriter(list.get(x).s.getOutputStream(), true);
-                out.println(message);
                 list.remove(x);
                 return;
             }
+            x++;
         }
     }
 
-
+    /**
+     * Send message s too all Users (excluding given user)
+     * @param s The message to send
+     * @param user  The User to exclude from the message (usually the sender)
+     * @throws IOException
+     */
     public void sendAll(String s, User user) throws IOException {
         int x = 0;
         while (x<list.size()) {
@@ -116,6 +146,11 @@ public class Channel {
         }
         return returned;
     }
+    /**
+     * Returns true if username is in use, otherwise return false
+     * @param username  The username to search for
+     * @return  true if the username is in user, otherwise false
+     */
     public boolean checkUsername(String username){ //method that returns true when in use
         int x = 0;
         while(x<list.size()){
